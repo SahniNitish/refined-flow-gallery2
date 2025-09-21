@@ -1,193 +1,293 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Github } from "lucide-react";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Github, Star, GitFork, ExternalLink, Calendar, Code } from "lucide-react";
+import { useState, useEffect } from "react";
 
-const GitHubContributions = () => {
-  const [hoveredDay, setHoveredDay] = useState<{ date: string; count: number } | null>(null);
-  
-  // Generate mock contribution data for the past year
-  const generateContributions = () => {
-    const contributions: { date: string; count: number; level: number }[] = [];
-    const today = new Date();
-    const oneYearAgo = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-    
-    for (let d = new Date(oneYearAgo); d <= today; d.setDate(d.getDate() + 1)) {
-      const random = Math.random();
-      let count = 0;
-      let level = 0;
-      
-      // More realistic distribution - more days with 0-2 contributions
-      if (random < 0.3) {
-        count = 0;
-        level = 0;
-      } else if (random < 0.6) {
-        count = Math.floor(Math.random() * 3) + 1;
-        level = 1;
-      } else if (random < 0.8) {
-        count = Math.floor(Math.random() * 5) + 3;
-        level = 2;
-      } else if (random < 0.95) {
-        count = Math.floor(Math.random() * 8) + 6;
-        level = 3;
-      } else {
-        count = Math.floor(Math.random() * 10) + 10;
-        level = 4;
+interface GitHubRepo {
+  id: number;
+  name: string;
+  description: string;
+  html_url: string;
+  stargazers_count: number;
+  forks_count: number;
+  language: string;
+  updated_at: string;
+  topics: string[];
+}
+
+interface GitHubUser {
+  login: string;
+  name: string;
+  bio: string;
+  public_repos: number;
+  followers: number;
+  following: number;
+  created_at: string;
+}
+
+const GitHubActivity = () => {
+  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const [user, setUser] = useState<GitHubUser | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const username = "sahniNitish"; // Your GitHub username
+
+  useEffect(() => {
+    const fetchGitHubData = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch user data
+        const userResponse = await fetch(`https://api.github.com/users/${username}`);
+        if (!userResponse.ok) throw new Error('Failed to fetch user data');
+        const userData = await userResponse.json();
+        setUser(userData);
+
+        // Fetch repositories
+        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
+        if (!reposResponse.ok) throw new Error('Failed to fetch repositories');
+        const reposData = await reposResponse.json();
+        setRepos(reposData);
+        
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setLoading(false);
       }
-      
-      contributions.push({
-        date: d.toISOString().split('T')[0],
-        count,
-        level
-      });
-    }
-    
-    return contributions;
+    };
+
+    fetchGitHubData();
+  }, []);
+
+  const getLanguageColor = (language: string) => {
+    const colors: { [key: string]: string } = {
+      JavaScript: "bg-yellow-500",
+      TypeScript: "bg-blue-500",
+      Python: "bg-green-500",
+      Java: "bg-orange-500",
+      HTML: "bg-red-500",
+      CSS: "bg-purple-500",
+      Vue: "bg-emerald-500",
+      React: "bg-cyan-500",
+      PHP: "bg-indigo-500",
+      C: "bg-gray-500",
+    };
+    return colors[language] || "bg-gray-400";
   };
 
-  const contributions = generateContributions();
-  
-  // Group contributions by weeks
-  const groupByWeeks = () => {
-    const weeks: (typeof contributions[0])[][] = [];
-    let currentWeek: (typeof contributions[0])[] = [];
-    
-    contributions.forEach((day, index) => {
-      const dayOfWeek = new Date(day.date).getDay();
-      
-      if (dayOfWeek === 0 && currentWeek.length > 0) {
-        weeks.push([...currentWeek]);
-        currentWeek = [];
-      }
-      
-      currentWeek.push(day);
-      
-      if (index === contributions.length - 1) {
-        weeks.push([...currentWeek]);
-      }
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: 'numeric'
     });
-    
-    return weeks;
   };
 
-  const weeks = groupByWeeks();
-  const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
-
-  const getLevelColor = (level: number) => {
-    switch (level) {
-      case 0: return "bg-muted/30";
-      case 1: return "bg-green-200 dark:bg-green-900";
-      case 2: return "bg-green-400 dark:bg-green-700";
-      case 3: return "bg-green-600 dark:bg-green-500";
-      case 4: return "bg-green-800 dark:bg-green-300";
-      default: return "bg-muted/30";
-    }
+  // GitHub Contribution Graph Component
+  const GitHubContributionGraph = () => {
+    return (
+      <div className="mb-8 p-6 bg-muted/10 rounded-xl border border-border/30">
+        <div className="flex items-center justify-between mb-4">
+          <h4 className="text-lg font-semibold text-foreground">Contribution Activity</h4>
+          <Badge variant="outline" className="border-green-500/30 text-green-400 bg-green-500/10">
+            Active Developer
+          </Badge>
+        </div>
+        
+        {/* Contribution Graph using GitHub's contribution graph */}
+        <div className="w-full overflow-hidden rounded-lg">
+          <img 
+            src={`https://ghchart.rshah.org/39d353/${username}`}
+            alt="GitHub Contribution Graph"
+            className="w-full h-auto rounded-lg bg-muted/20"
+            style={{ 
+              filter: 'brightness(1.1) contrast(1.1)',
+              maxWidth: '100%'
+            }}
+          />
+        </div>
+        
+        <div className="flex items-center justify-between mt-4 text-sm text-muted-foreground">
+          <span>Contributions in the last year</span>
+          <button
+            onClick={() => window.open(`https://github.com/${username}`, '_blank')}
+            className="text-green-500 hover:text-green-400 transition-colors duration-300"
+          >
+            View on GitHub →
+          </button>
+        </div>
+      </div>
+    );
   };
 
-  const monthLabels = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
+  if (loading) {
+    return (
+      <Card className="glass-card p-8 animate-fade-up border-0 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl flex items-center justify-center animate-pulse">
+            <Github className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-foreground">GitHub Activity</h3>
+            <p className="text-muted-foreground">Loading real GitHub data...</p>
+          </div>
+        </div>
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-20 bg-muted/20 rounded-xl animate-pulse"></div>
+          ))}
+        </div>
+      </Card>
+    );
+  }
 
-  const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  if (error) {
+    return (
+      <Card className="glass-card p-8 animate-fade-up border-0 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center">
+            <Github className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-foreground">GitHub Activity</h3>
+            <p className="text-red-400">Failed to load GitHub data</p>
+          </div>
+        </div>
+        <Button
+          variant="outline"
+          className="w-full border-primary/30 hover:bg-primary/10"
+          onClick={() => window.open(`https://github.com/${username}`, '_blank')}
+        >
+          <ExternalLink className="h-4 w-4 mr-2" />
+          View on GitHub
+        </Button>
+      </Card>
+    );
+  }
 
   return (
-    <Card className="glass-card p-6 animate-fade-up">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center animate-glow">
-          <Github className="h-5 w-5 text-white" />
+    <Card className="glass-card p-8 animate-fade-up border-0 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-green-700 rounded-2xl flex items-center justify-center group-hover:animate-glow shadow-lg">
+            <Github className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-foreground">GitHub Activity</h3>
+            <p className="text-muted-foreground">Real-time repository data</p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-xl font-bold text-foreground">GitHub Activity</h3>
-          <p className="text-sm text-muted-foreground">
-            {totalContributions} contributions in the last year
-          </p>
-        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          className="border-green-500/30 hover:bg-green-500/10 rounded-xl"
+          onClick={() => window.open(`https://github.com/${username}`, '_blank')}
+        >
+          <ExternalLink className="h-4 w-4 mr-2" />
+          View Profile
+        </Button>
       </div>
 
-      <div className="relative">
-        {/* Month labels */}
-        <div className="flex justify-between text-xs text-muted-foreground mb-2 ml-8">
-          {monthLabels.map((month) => (
-            <span key={month}>{month}</span>
-          ))}
-        </div>
+      {/* GitHub Contribution Graph - At the top */}
+      <GitHubContributionGraph />
 
-        <div className="flex gap-1">
-          {/* Day labels */}
-          <div className="flex flex-col gap-1 text-xs text-muted-foreground pr-2">
-            {dayLabels.map((day, index) => (
-              <div key={day} className="h-3 flex items-center">
-                {index % 2 === 1 && <span>{day}</span>}
-              </div>
-            ))}
+      {/* GitHub Stats */}
+      {user && (
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="text-center p-3 bg-muted/20 rounded-xl">
+            <div className="text-2xl font-bold text-green-500">{user.public_repos}</div>
+            <div className="text-xs text-muted-foreground">Repositories</div>
           </div>
-
-          {/* Contribution grid */}
-          <div className="flex gap-1 overflow-x-auto">
-            {weeks.map((week, weekIndex) => (
-              <div key={weekIndex} className="flex flex-col gap-1">
-                {Array.from({ length: 7 }, (_, dayIndex) => {
-                  const day = week.find(d => new Date(d.date).getDay() === dayIndex);
-                  return (
-                    <div
-                      key={dayIndex}
-                      className={`w-3 h-3 rounded-sm border border-border/50 cursor-pointer transition-all duration-200 hover:scale-110 ${
-                        day ? getLevelColor(day.level) : "bg-muted/20"
-                      }`}
-                      onMouseEnter={() => day && setHoveredDay({ date: day.date, count: day.count })}
-                      onMouseLeave={() => setHoveredDay(null)}
-                    />
-                  );
-                })}
-              </div>
-            ))}
+          <div className="text-center p-3 bg-muted/20 rounded-xl">
+            <div className="text-2xl font-bold text-green-500">{user.followers}</div>
+            <div className="text-xs text-muted-foreground">Followers</div>
+          </div>
+          <div className="text-center p-3 bg-muted/20 rounded-xl">
+            <div className="text-2xl font-bold text-green-500">{user.following}</div>
+            <div className="text-xs text-muted-foreground">Following</div>
           </div>
         </div>
+      )}
 
-        {/* Tooltip */}
-        {hoveredDay && (
-          <div className="absolute top-0 left-0 bg-popover border border-border rounded-lg p-2 text-sm shadow-lg z-10 pointer-events-none">
-            <div className="font-medium">{hoveredDay.count} contributions</div>
-            <div className="text-muted-foreground">
-              {new Date(hoveredDay.date).toLocaleDateString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
-              })}
+      {/* Recent Repositories */}
+      <div className="space-y-3">
+        <h4 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+          <Code className="h-5 w-5 text-green-500" />
+          Recent Repositories
+        </h4>
+        
+        {repos.slice(0, 4).map((repo) => (
+          <div
+            key={repo.id}
+            className="p-4 bg-muted/10 rounded-xl border border-border/30 hover:border-green-500/30 hover:bg-green-500/5 transition-all duration-300 cursor-pointer group"
+            onClick={() => window.open(repo.html_url, '_blank')}
+          >
+            <div className="flex items-start justify-between mb-2">
+              <h5 className="font-semibold text-foreground group-hover:text-green-500 transition-colors duration-300">
+                {repo.name}
+              </h5>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <Star className="h-3 w-3" />
+                  {repo.stargazers_count}
+                </div>
+                <div className="flex items-center gap-1">
+                  <GitFork className="h-3 w-3" />
+                  {repo.forks_count}
+                </div>
+              </div>
             </div>
+            
+            {repo.description && (
+              <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                {repo.description}
+              </p>
+            )}
+            
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {repo.language && (
+                  <div className="flex items-center gap-2">
+                    <div className={`w-3 h-3 rounded-full ${getLanguageColor(repo.language)}`}></div>
+                    <span className="text-xs text-muted-foreground">{repo.language}</span>
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                <Calendar className="h-3 w-3" />
+                {formatDate(repo.updated_at)}
+              </div>
+            </div>
+            
+            {repo.topics && repo.topics.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-2">
+                {repo.topics.slice(0, 3).map((topic) => (
+                  <Badge
+                    key={topic}
+                    variant="outline"
+                    className="text-xs px-2 py-0 border-green-500/20 text-green-400"
+                  >
+                    {topic}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        ))}
       </div>
 
-      {/* Legend */}
-      <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
-        <span>Less</span>
-        <div className="flex gap-1">
-          {[0, 1, 2, 3, 4].map((level) => (
-            <div
-              key={level}
-              className={`w-3 h-3 rounded-sm border border-border/50 ${getLevelColor(level)}`}
-            />
-          ))}
+      {/* Footer */}
+      <div className="mt-6 pt-4 border-t border-border/30">
+        <div className="flex items-center justify-between text-xs text-muted-foreground">
+          <span>Updated in real-time from GitHub API</span>
+          <span>Member since {user && formatDate(user.created_at)}</span>
         </div>
-        <span>More</span>
-      </div>
-
-      <div className="mt-4 flex flex-wrap gap-2">
-        <Badge variant="secondary" className="bg-muted/50 text-muted-foreground">
-          {contributions.filter(d => d.count > 0).length} active days
-        </Badge>
-        <Badge variant="secondary" className="bg-muted/50 text-muted-foreground">
-          Longest streak: 12 days
-        </Badge>
-        <Badge variant="secondary" className="bg-muted/50 text-muted-foreground">
-          Current streak: 3 days
-        </Badge>
       </div>
     </Card>
   );
 };
 
-export default GitHubContributions;
+export default GitHubActivity;

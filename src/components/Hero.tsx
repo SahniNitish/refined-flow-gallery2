@@ -8,76 +8,91 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero">
-      {/* Animated Background Elements */}
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero pt-16">
+      {/* Enhanced Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse delay-700"></div>
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/8 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent/6 rounded-full blur-3xl animate-float-delayed"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-3xl animate-pulse"></div>
+      </div>
+      
+      {/* Floating Code Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 text-primary/20 font-mono text-sm animate-float">{'<code/>'}</div>
+        <div className="absolute top-40 right-20 text-accent/20 font-mono text-sm animate-float-delayed">{'{ }'}</div>
+        <div className="absolute bottom-40 left-20 text-primary/20 font-mono text-sm animate-float">{'</>'}</div>
+        <div className="absolute bottom-20 right-10 text-accent/20 font-mono text-sm animate-float-delayed">{'[]'}</div>
       </div>
       
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="animate-fade-up">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
-            <span className="hero-text">Nitish</span>
-            <br />
-            <span className="text-foreground">Sahni</span>
+          <div className="mb-8">
+            <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium mb-6 animate-fade-in">
+              👨‍💻 Welcome to Nitish's portfolio
+            </div>
+          </div>
+          
+          <h1 className="text-6xl md:text-8xl lg:text-9xl xl:text-[10rem] font-bold mb-8 tracking-wide leading-none">
+            <span className="name-font glitch-text inline-block animate-pulse" data-text="Nitish Sahni" style={{ animationDuration: '4s' }}>
+              Nitish Sahni
+            </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-4 max-w-2xl mx-auto animate-fade-in delay-300">
-            Full-Stack Developer & AI Enthusiast
-          </p>
-          
-          <p className="text-lg text-muted-foreground/80 mb-12 max-w-3xl mx-auto animate-fade-in delay-500">
-            Computer Science student at Acadia University crafting innovative solutions 
-            in blockchain analytics, AI applications, and modern web technologies.
-          </p>
+          <div className="space-y-4 mb-12">
+            <p className="text-2xl md:text-3xl font-semibold text-foreground animate-fade-in delay-300">
+              Full-Stack Developer & AI Enthusiast
+            </p>
+            
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-fade-in delay-500">
+              Computer Science student at <span className="text-primary font-medium">Acadia University</span> crafting innovative solutions 
+              in blockchain analytics, AI applications, and modern web technologies.
+            </p>
+          </div>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-slide-up delay-700">
             <Button 
               size="lg" 
-              className="bg-gradient-primary hover:scale-105 transition-all duration-300 shadow-glow px-8 py-6 text-lg font-medium"
+              className="bg-gradient-primary hover:scale-105 transition-all duration-300 shadow-glow px-10 py-6 text-lg font-semibold rounded-xl"
               onClick={() => scrollToSection('projects')}
             >
               View My Work
-              <ArrowDown className="ml-2 h-5 w-5" />
+              <ArrowDown className="ml-3 h-5 w-5" />
             </Button>
             
             <div className="flex gap-4">
               <Button
                 variant="outline"
                 size="lg"
-                className="hover-lift border-primary/20 hover:border-primary/40 hover:bg-primary/10"
+                className="hover-lift border-primary/30 hover:border-primary/50 hover:bg-primary/10 rounded-xl px-6 py-6"
                 onClick={() => window.open('https://github.com/sahniNitish', '_blank')}
               >
                 <Github className="h-5 w-5" />
+                <span className="sr-only">GitHub</span>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="hover-lift border-primary/20 hover:border-primary/40 hover:bg-primary/10"
+                className="hover-lift border-primary/30 hover:border-primary/50 hover:bg-primary/10 rounded-xl px-6 py-6"
                 onClick={() => window.open('https://linkedin.com/in/SahniNitish', '_blank')}
               >
                 <Linkedin className="h-5 w-5" />
+                <span className="sr-only">LinkedIn</span>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="hover-lift border-primary/20 hover:border-primary/40 hover:bg-primary/10"
+                className="hover-lift border-primary/30 hover:border-primary/50 hover:bg-primary/10 rounded-xl px-6 py-6"
                 onClick={() => window.open('mailto:Nitishsahni884@gmail.com')}
               >
                 <Mail className="h-5 w-5" />
+                <span className="sr-only">Email</span>
               </Button>
             </div>
           </div>
         </div>
       </div>
       
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse"></div>
-        </div>
-      </div>
+
     </section>
   );
 };
