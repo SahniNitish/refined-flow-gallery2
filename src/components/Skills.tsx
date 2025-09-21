@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Code, Database, Cloud, Wrench } from "lucide-react";
+import GitHubContributions from "./GitHubContributions";
 
 const Skills = () => {
   const skillCategories = [
@@ -70,15 +71,20 @@ const Skills = () => {
           ))}
         </div>
         
-        <div className="mt-16 text-center animate-slide-up">
-          <Card className="glass-card p-8 max-w-3xl mx-auto">
-            <h3 className="text-2xl font-bold text-foreground mb-4">Continuous Learning</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Always exploring the latest in web development, AI/ML, blockchain technologies, 
-              and cloud computing. Currently diving deeper into advanced React patterns, 
-              microservices architecture, and DeFi protocols.
-            </p>
-          </Card>
+        <div className="mt-16 grid lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <GitHubContributions />
+          </div>
+          <div className="animate-slide-up">
+            <Card className="glass-card p-8 h-full flex flex-col justify-center">
+              <h3 className="text-2xl font-bold text-foreground mb-4">Continuous Learning</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Always exploring the latest in web development, AI/ML, blockchain technologies, 
+                and cloud computing. Currently diving deeper into advanced React patterns, 
+                microservices architecture, and DeFi protocols.
+              </p>
+            </Card>
+          </div>
         </div>
       </div>
     </section>
