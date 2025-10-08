@@ -73,7 +73,7 @@ const Projects = () => {
       </div>
 
       <div className="container mx-auto px-6 relative">
-        <div className="text-center mb-20 animate-fade-up">
+        <div className={`text-center mb-20 transition-all duration-1000 ${isVisible ? 'animate-slide-in-left' : 'opacity-0 -translate-x-10'}`}>
           <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium mb-6">
             💼 My Work
           </div>
