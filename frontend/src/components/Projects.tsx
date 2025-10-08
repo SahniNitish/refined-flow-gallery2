@@ -156,19 +156,20 @@ const Projects = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="flex-1 border-primary/30 hover:bg-primary/10 hover:border-primary/50 rounded-xl"
+                    className="flex-1 border-primary/30 hover:bg-primary/10 hover:border-primary/50 rounded-xl cursor-hover group"
                     onClick={() => window.open(project.github, '_blank')}
                   >
-                    <Github className="h-4 w-4 mr-2" />
+                    <Github className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
                     Code
                   </Button>
                   <Button
                     size="sm"
-                    className="flex-1 bg-gradient-primary hover:scale-105 transition-all duration-300 rounded-xl shadow-lg"
+                    className="flex-1 bg-gradient-primary hover:scale-105 transition-all duration-300 rounded-xl shadow-lg cursor-hover group relative overflow-hidden"
                     onClick={() => window.open(project.live || project.github, '_blank')}
                   >
-                    <ExternalLink className="h-4 w-4 mr-2" />
+                    <ExternalLink className="h-4 w-4 mr-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                     {project.live ? 'Live Demo' : 'View'}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                   </Button>
                 </div>
               </div>
