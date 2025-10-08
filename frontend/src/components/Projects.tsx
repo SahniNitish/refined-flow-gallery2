@@ -60,7 +60,11 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-32 bg-muted/5 relative overflow-hidden">
+    <section 
+      id="projects" 
+      ref={projectsRef as any}
+      className="py-32 bg-muted/5 relative overflow-hidden"
+    >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
