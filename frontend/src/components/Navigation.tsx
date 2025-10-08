@@ -58,12 +58,14 @@ const Navigation = () => {
                         ))}
                     </div>
 
-                    {/* Social Links */}
+                    {/* Social Links & Theme Toggle */}
                     <div className="hidden md:flex items-center space-x-3">
+                        <ThemeToggle />
+                        <div className="w-px h-6 bg-border/50" />
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="hover:bg-primary/10 hover:text-primary"
+                            className="hover:bg-primary/10 hover:text-primary cursor-hover"
                             onClick={() => window.open('https://github.com/sahniNitish', '_blank')}
                         >
                             <Github className="h-4 w-4" />
@@ -71,7 +73,7 @@ const Navigation = () => {
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="hover:bg-primary/10 hover:text-primary"
+                            className="hover:bg-primary/10 hover:text-primary cursor-hover"
                             onClick={() => window.open('https://linkedin.com/in/SahniNitish', '_blank')}
                         >
                             <Linkedin className="h-4 w-4" />
@@ -79,7 +81,7 @@ const Navigation = () => {
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="hover:bg-primary/10 hover:text-primary"
+                            className="hover:bg-primary/10 hover:text-primary cursor-hover"
                             onClick={() => window.open('mailto:Nitishsahni884@gmail.com')}
                         >
                             <Mail className="h-4 w-4" />
