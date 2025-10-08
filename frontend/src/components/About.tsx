@@ -3,6 +3,9 @@ import { GraduationCap, Award, Users } from "lucide-react";
 import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 
 const About = () => {
+  const { ref: aboutRef, isVisible } = useScrollAnimation();
+  const { containerRef, visibleItems } = useStaggeredAnimation(3, 200);
+  
   const highlights = [
     {
       icon: GraduationCap,
