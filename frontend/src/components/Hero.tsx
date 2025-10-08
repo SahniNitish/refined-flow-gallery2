@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import Particles from "@/components/ui/particles";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Hero = () => {
   const scrollToSection = (sectionId: string) => {
