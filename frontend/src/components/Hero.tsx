@@ -74,11 +74,12 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center animate-slide-up delay-700">
             <Button 
               size="lg" 
-              className="bg-gradient-primary hover:scale-105 transition-all duration-300 shadow-glow px-10 py-6 text-lg font-semibold rounded-xl"
+              className="bg-gradient-primary hover:scale-105 transition-all duration-300 shadow-glow px-10 py-6 text-lg font-semibold rounded-xl cursor-hover group relative overflow-hidden"
               onClick={() => scrollToSection('projects')}
             >
-              View My Work
-              <ArrowDown className="ml-3 h-5 w-5" />
+              <span className="relative z-10">View My Work</span>
+              <ArrowDown className="ml-3 h-5 w-5 relative z-10 group-hover:translate-y-1 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             </Button>
             
             <div className="flex gap-4">
