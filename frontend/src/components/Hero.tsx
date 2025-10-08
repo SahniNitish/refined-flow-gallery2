@@ -17,11 +17,25 @@ const Hero = () => {
       ref={heroRef as any}
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero pt-16"
     >
+      {/* Interactive Particles */}
+      <Particles 
+        count={80} 
+        color="#3b82f6" 
+        speed={0.3} 
+        size={3} 
+        opacity={0.6}
+        className="opacity-30"
+      />
+
       {/* Enhanced Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/8 rounded-full blur-3xl animate-float"></div>
         <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-accent/6 rounded-full blur-3xl animate-float-delayed"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-3xl animate-pulse"></div>
+        
+        {/* New Dynamic Elements */}
+        <div className="absolute top-10 right-10 w-20 h-20 bg-gradient-primary opacity-20 rounded-full animate-bounce" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-20 left-10 w-16 h-16 bg-accent/30 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
       </div>
       
       {/* Floating Code Elements */}
