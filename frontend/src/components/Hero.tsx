@@ -47,7 +47,7 @@ const Hero = () => {
       </div>
       
       <div className="container mx-auto px-6 text-center relative z-10">
-        <div className="animate-fade-up">
+        <div className={`transition-all duration-1000 ${isVisible ? 'animate-fade-up' : 'opacity-0 translate-y-10'}`}>
           <div className="mb-8">
             <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium mb-6 animate-fade-in">
               👨‍💻 Welcome to Nitish's portfolio
