@@ -86,28 +86,28 @@ const Hero = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="hover-lift border-primary/30 hover:border-primary/50 hover:bg-primary/10 rounded-xl px-6 py-6"
+                className="hover-lift border-primary/30 hover:border-primary/50 hover:bg-primary/10 rounded-xl px-6 py-6 cursor-hover group"
                 onClick={() => window.open('https://github.com/sahniNitish', '_blank')}
               >
-                <Github className="h-5 w-5" />
+                <Github className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
                 <span className="sr-only">GitHub</span>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="hover-lift border-primary/30 hover:border-primary/50 hover:bg-primary/10 rounded-xl px-6 py-6"
+                className="hover-lift border-primary/30 hover:border-primary/50 hover:bg-primary/10 rounded-xl px-6 py-6 cursor-hover group"
                 onClick={() => window.open('https://linkedin.com/in/SahniNitish', '_blank')}
               >
-                <Linkedin className="h-5 w-5" />
+                <Linkedin className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
                 <span className="sr-only">LinkedIn</span>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="hover-lift border-primary/30 hover:border-primary/50 hover:bg-primary/10 rounded-xl px-6 py-6"
+                className="hover-lift border-primary/30 hover:border-primary/50 hover:bg-primary/10 rounded-xl px-6 py-6 cursor-hover group"
                 onClick={() => window.open('mailto:Nitishsahni884@gmail.com')}
               >
-                <Mail className="h-5 w-5" />
+                <Mail className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
                 <span className="sr-only">Email</span>
               </Button>
             </div>
