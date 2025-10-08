@@ -28,7 +28,11 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-32 bg-background relative overflow-hidden">
+    <section 
+      id="about" 
+      ref={aboutRef as any}
+      className="py-32 bg-background relative overflow-hidden"
+    >
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
