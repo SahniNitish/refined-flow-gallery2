@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github, Brain, Code2, Workflow } from "lucide-react";
+import { ExternalLink, Github, Brain, Code2, Workflow, ArrowUpRight } from "lucide-react";
 import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 
 const Projects = () => {
@@ -10,52 +10,55 @@ const Projects = () => {
   
   const projects = [
     {
-      title: "CodeSynth – AI-Powered Web App Generator",
+      title: "CodeSynth",
+      subtitle: "AI-Powered Web App Generator",
       description: "An innovative AI platform that generates responsive web applications from user commands, built with modern microservices architecture.",
       icon: Code2,
       technologies: ["TypeScript", "Node.js", "React", "API Integration", "Microservices"],
       features: [
         "AI-powered code generation from natural language",
         "Responsive web app creation with modern frameworks",
-        "Containerized architecture for scalability",
-        "Seamless API integration and authentication"
+        "Containerized architecture for scalability"
       ],
       github: "https://github.com/sahniNitish",
       live: "https://codesynth-demo.com",
       gradient: "from-blue-500 to-purple-600",
-      status: "In Development"
+      status: "In Development",
+      statusType: "development"
     },
     {
-      title: "Research Paper Summarizer",
+      title: "Research Paper",
+      subtitle: "Summarizer",
       description: "AI-powered tool that extracts key insights from research papers, streamlining the academic review process for researchers and students.",
       icon: Brain,
       technologies: ["Python", "Streamlit", "Cohere API", "NLP"],
       features: [
         "Advanced NLP for accurate content extraction",
         "Concise summaries of complex academic content",
-        "Optimized performance for research productivity",
         "Interactive web interface for easy use"
       ],
       github: "https://github.com/sahniNitish",
       live: "https://research-summarizer.streamlit.app",
       gradient: "from-green-500 to-teal-600",
-      status: "Live"
+      status: "Live",
+      statusType: "live"
     },
     {
-      title: "Task Flow – Work-Flow Management App",
+      title: "Task Flow",
+      subtitle: "Work-Flow Management App",
       description: "Full-stack task management application with seamless user experience and efficient database management.",
       icon: Workflow,
       technologies: ["Laravel", "Vue.js", "Inertia.js", "MySQL", "Tailwind CSS"],
       features: [
         "Complete CRUD operations for task management",
         "Server-side routing without page reloads",
-        "Interactive Vue.js frontend",
-        "Eloquent ORM for efficient data handling"
+        "Interactive Vue.js frontend"
       ],
       github: "https://github.com/sahniNitish",
       live: "https://taskflow-demo.com",
       gradient: "from-orange-500 to-red-600",
-      status: "Completed"
+      status: "Completed",
+      statusType: "completed"
     }
   ];
 
@@ -63,7 +66,7 @@ const Projects = () => {
     <section 
       id="projects" 
       ref={projectsRef as any}
-      className="py-32 bg-muted/5 relative overflow-hidden"
+      className="section-modern bg-muted/5 relative"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -72,23 +75,25 @@ const Projects = () => {
         }} />
       </div>
 
-      <div className="container mx-auto px-6 relative">
+      <div className="section-content">
         <div className={`text-center mb-20 transition-all duration-1000 ${isVisible ? 'animate-slide-in-left' : 'opacity-0 -translate-x-10'}`}>
-          <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium mb-6">
+          <div className="inline-block px-6 py-3 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium mb-8">
             💼 My Work
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 hero-text">Featured Projects</h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <h2 className="text-5xl md:text-7xl font-bold mb-8 display-font">
+            Featured <span className="text-gradient">Projects</span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             A showcase of innovative applications spanning AI, blockchain, and full-stack development, 
             each solving real-world problems with modern technologies.
           </p>
         </div>
         
-        <div ref={containerRef as any} className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div ref={containerRef as any} className="project-grid">
           {projects.map((project, index) => (
             <Card 
               key={index} 
-              className={`glass-card hover-lift group overflow-hidden border-0 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl cursor-hover transition-all duration-700 ${
+              className={`modern-card group overflow-hidden cursor-hover transition-all duration-700 ${
                 visibleItems.has(index) 
                   ? index % 2 === 0 
                     ? 'animate-slide-in-left opacity-100 translate-x-0' 
@@ -98,77 +103,77 @@ const Projects = () => {
             >
               <div className="p-8 h-full flex flex-col">
                 {/* Header */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className={`w-14 h-14 bg-gradient-to-br ${project.gradient} rounded-2xl flex items-center justify-center group-hover:animate-glow shadow-lg`}>
-                    <project.icon className="h-7 w-7 text-white" />
+                <div className="flex items-start justify-between mb-8">
+                  <div className={`w-16 h-16 bg-gradient-to-br ${project.gradient} rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                    <project.icon className="h-8 w-8 text-white" />
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      project.status === 'Live' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
-                      project.status === 'In Development' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
-                      'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                    }`}>
-                      {project.status}
-                    </div>
+                  <div className={`status-badge ${
+                    project.statusType === 'live' ? 'status-live' :
+                    project.statusType === 'development' ? 'status-development' :
+                    'status-completed'
+                  }`}>
+                    {project.status}
                   </div>
                 </div>
                 
                 {/* Content */}
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
-                    {project.title}
-                  </h3>
+                <div className="flex-1 space-y-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300 heading-font">
+                      {project.title}
+                    </h3>
+                    <p className="text-lg font-medium text-primary mb-4">{project.subtitle}</p>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {project.description}
+                    </p>
+                  </div>
                   
-                  <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
-                    {project.description}
-                  </p>
-                  
-                  <div className="space-y-2 mb-6">
-                    {project.features.slice(0, 3).map((feature, i) => (
+                  <div className="space-y-3">
+                    {project.features.map((feature, i) => (
                       <div key={i} className="flex items-start gap-3">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-xs text-muted-foreground leading-relaxed">{feature}</p>
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{feature}</p>
                       </div>
                     ))}
                   </div>
-                </div>
-                
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.technologies.slice(0, 4).map((tech, i) => (
-                    <Badge 
-                      key={i} 
-                      variant="outline" 
-                      className="border-primary/20 text-primary/80 hover:bg-primary/10 text-xs px-2 py-1 hover:scale-105 transition-all duration-300"
-                    >
-                      {tech}
-                    </Badge>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <Badge variant="outline" className="border-muted-foreground/20 text-muted-foreground text-xs px-2 py-1">
-                      +{project.technologies.length - 4}
-                    </Badge>
-                  )}
+
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.slice(0, 4).map((tech, i) => (
+                      <Badge 
+                        key={i} 
+                        variant="outline" 
+                        className="border-primary/20 text-primary/80 hover:bg-primary/10 text-xs px-3 py-1 hover:scale-105 transition-all duration-300 rounded-full"
+                      >
+                        {tech}
+                      </Badge>
+                    ))}
+                    {project.technologies.length > 4 && (
+                      <Badge variant="outline" className="border-muted-foreground/20 text-muted-foreground text-xs px-3 py-1 rounded-full">
+                        +{project.technologies.length - 4}
+                      </Badge>
+                    )}
+                  </div>
                 </div>
                 
                 {/* Actions */}
-                <div className="flex gap-3">
+                <div className="flex gap-3 mt-8">
                   <Button
                     variant="outline"
-                    size="sm"
-                    className="flex-1 border-primary/30 hover:bg-primary/10 hover:border-primary/50 rounded-xl cursor-hover group"
+                    className="flex-1 border-border hover:bg-muted hover:border-primary/50 rounded-full cursor-hover group transition-all duration-300"
                     onClick={() => window.open(project.github, '_blank')}
                   >
                     <Github className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
                     Code
                   </Button>
                   <Button
-                    size="sm"
-                    className="flex-1 bg-gradient-primary hover:scale-105 transition-all duration-300 rounded-xl shadow-lg cursor-hover group relative overflow-hidden"
+                    className="flex-1 btn-primary group relative overflow-hidden rounded-full"
                     onClick={() => window.open(project.live || project.github, '_blank')}
                   >
-                    <ExternalLink className="h-4 w-4 mr-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                    {project.live ? 'Live Demo' : 'View'}
+                    <span className="relative z-10 flex items-center">
+                      <ExternalLink className="h-4 w-4 mr-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                      {project.live ? 'Live Demo' : 'View'}
+                    </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                   </Button>
                 </div>
@@ -178,18 +183,18 @@ const Projects = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-16 animate-slide-up">
-          <p className="text-muted-foreground mb-6">
+        <div className="text-center mt-20 animate-slide-up">
+          <p className="text-muted-foreground mb-8 text-lg">
             Interested in seeing more of my work?
           </p>
           <Button
             variant="outline"
-            size="lg"
-            className="border-primary/30 hover:bg-primary/10 hover:border-primary/50 rounded-xl px-8"
+            className="btn-secondary cursor-hover group"
             onClick={() => window.open('https://github.com/sahniNitish', '_blank')}
           >
-            <Github className="h-5 w-5 mr-2" />
+            <Github className="h-5 w-5 mr-3 group-hover:rotate-12 transition-transform duration-300" />
             View All Projects on GitHub
+            <ArrowUpRight className="h-5 w-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
           </Button>
         </div>
       </div>
