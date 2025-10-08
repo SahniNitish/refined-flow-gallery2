@@ -5,6 +5,9 @@ import { ExternalLink, Github, Brain, Code2, Workflow } from "lucide-react";
 import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 
 const Projects = () => {
+  const { ref: projectsRef, isVisible } = useScrollAnimation();
+  const { containerRef, visibleItems } = useStaggeredAnimation(3, 300);
+  
   const projects = [
     {
       title: "CodeSynth – AI-Powered Web App Generator",
