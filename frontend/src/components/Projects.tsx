@@ -84,12 +84,17 @@ const Projects = () => {
           </p>
         </div>
         
-        <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div ref={containerRef as any} className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {projects.map((project, index) => (
             <Card 
               key={index} 
-              className="glass-card hover-lift group animate-fade-up overflow-hidden border-0 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl" 
-              style={{ animationDelay: `${index * 200}ms` }}
+              className={`glass-card hover-lift group overflow-hidden border-0 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl cursor-hover transition-all duration-700 ${
+                visibleItems.has(index) 
+                  ? index % 2 === 0 
+                    ? 'animate-slide-in-left opacity-100 translate-x-0' 
+                    : 'animate-slide-in-right opacity-100 translate-x-0'
+                  : 'opacity-0 translate-x-8'
+              }`}
             >
               <div className="p-8 h-full flex flex-col">
                 {/* Header */}
