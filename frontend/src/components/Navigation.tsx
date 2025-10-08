@@ -39,9 +39,10 @@ const Navigation = () => {
                     {/* Logo */}
                     <button
                         onClick={() => scrollToSection('hero')}
-                        className="text-2xl font-bold hero-text hover:scale-105 transition-transform duration-300"
+                        className="text-2xl font-bold hero-text hover:scale-105 transition-transform duration-300 cursor-hover relative group"
                     >
                         NS
+                        <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-20 rounded-lg transition-opacity duration-300 -z-10" />
                     </button>
 
                     {/* Desktop Navigation */}
