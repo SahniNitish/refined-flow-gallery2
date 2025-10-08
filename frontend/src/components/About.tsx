@@ -53,12 +53,15 @@ const About = () => {
         </div>
         
         {/* Highlights Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20 max-w-6xl mx-auto">
+        <div ref={containerRef as any} className="grid md:grid-cols-3 gap-8 mb-20 max-w-6xl mx-auto">
           {highlights.map((item, index) => (
             <Card 
               key={index} 
-              className="glass-card p-8 hover-lift animate-fade-up border-0 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl group" 
-              style={{ animationDelay: `${index * 200}ms` }}
+              className={`glass-card p-8 hover-lift border-0 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-xl group cursor-hover transition-all duration-700 ${
+                visibleItems.has(index) 
+                  ? 'animate-reveal opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}
             >
               <div className="flex flex-col items-center text-center">
                 <div className="w-18 h-18 bg-gradient-primary rounded-3xl flex items-center justify-center mb-6 group-hover:animate-glow shadow-lg">
