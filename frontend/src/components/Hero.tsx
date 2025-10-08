@@ -4,13 +4,19 @@ import Particles from "@/components/ui/particles";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Hero = () => {
+  const { ref: heroRef, isVisible } = useScrollAnimation();
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero pt-16">
+    <section 
+      id="hero" 
+      ref={heroRef as any}
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-hero pt-16"
+    >
       {/* Enhanced Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/8 rounded-full blur-3xl animate-float"></div>
