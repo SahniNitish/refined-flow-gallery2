@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { GraduationCap, Award, Users } from "lucide-react";
+import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 
 const About = () => {
   const highlights = [
