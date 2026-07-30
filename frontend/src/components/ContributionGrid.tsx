@@ -1,10 +1,14 @@
-// Decorative, GitHub-contribution-graph-inspired backdrop for the Hero name.
+// Decorative, GitHub-contribution-graph-inspired backdrop for the Hero.
 // Entirely client-side (seeded, deterministic — no network, no GitHub data).
 // Layout/colors are computed once at module load; the only motion is a
 // pure-CSS opacity pulse per cell, gated behind prefers-reduced-motion.
+//
+// Fixed pixel-grid sized for ~1920px viewports, centered and clipped by the
+// Hero section's overflow-hidden — cheaper than a responsive auto-fill
+// recompute, and still reads edge-to-edge on any real screen width.
 
-const COLS = 32;
-const ROWS = 12;
+const COLS = 120;
+const ROWS = 7;
 const CELL = 12; // px
 const GAP = 4; // px
 const GREEN_PALETTE = ["#0e4429", "#006d32", "#26a641", "#39d353"];
@@ -49,7 +53,7 @@ const GRID = buildGrid();
 const ContributionGrid = () => (
   <div
     aria-hidden
-    className="absolute inset-0 flex items-center justify-center pointer-events-none [mask-image:radial-gradient(ellipse_60%_55%_at_center,black_0%,transparent_75%)] [-webkit-mask-image:radial-gradient(ellipse_60%_55%_at_center,black_0%,transparent_75%)]"
+    className="absolute inset-0 flex items-center justify-center pointer-events-none [mask-image:linear-gradient(to_bottom,transparent_0%,black_20%,black_80%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_20%,black_80%,transparent_100%)]"
   >
     <div
       style={{
