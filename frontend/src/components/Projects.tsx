@@ -1,201 +1,85 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github, Brain, Code2, Workflow, ArrowUpRight } from "lucide-react";
-import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
+import { ArrowUpRight } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+
+const projects = [
+  {
+    title: "Line-Heartbeat",
+    description:
+      "Real-time production monitoring for four manufacturing lines — live OEE (availability, performance, quality) computed from PI sensor data, JDE work orders, and downtime systems.",
+    tags: [".NET 8", "Blazor Server", "PI Web API", "SQL Server", "SQLite"],
+    link: null,
+    label: "Internal · Irving Personal Care",
+  },
+  {
+    title: "npm-guardian",
+    description: "Multi-layer supply-chain security scanner for npm packages.",
+    tags: ["Node.js", "Security"],
+    link: "https://github.com/SahniNitish/npm-gaurdian",
+    label: null,
+  },
+  {
+    title: "LMAT",
+    description:
+      "Labour Market Analysis Tool built for Cornerstone Occupational Therapy — React + Express with Firebase auth, deployed on Vercel/Render.",
+    tags: ["React", "Express", "Firebase"],
+    link: null,
+    label: "Client project",
+  },
+  {
+    title: "RealMeta-Museum",
+    description: "AI-powered museum experience built during my RealMeta internship.",
+    tags: ["TypeScript", "AI"],
+    link: "https://github.com/SahniNitish/RealMeta-Museum",
+    label: null,
+  },
+];
 
 const Projects = () => {
   const { ref: projectsRef, isVisible } = useScrollAnimation();
-  const { containerRef, visibleItems } = useStaggeredAnimation(3, 300);
-  
-  const projects = [
-    {
-      title: "CodeSynth",
-      subtitle: "AI-Powered Web App Generator",
-      description: "An innovative AI platform that generates responsive web applications from user commands, built with modern microservices architecture.",
-      icon: Code2,
-      technologies: ["TypeScript", "Node.js", "React", "API Integration", "Microservices"],
-      features: [
-        "AI-powered code generation from natural language",
-        "Responsive web app creation with modern frameworks",
-        "Containerized architecture for scalability"
-      ],
-      github: "https://github.com/sahniNitish",
-      live: "https://codesynth-demo.com",
-      gradient: "from-blue-500 to-purple-600",
-      status: "In Development",
-      statusType: "development"
-    },
-    {
-      title: "Research Paper",
-      subtitle: "Summarizer",
-      description: "AI-powered tool that extracts key insights from research papers, streamlining the academic review process for researchers and students.",
-      icon: Brain,
-      technologies: ["Python", "Streamlit", "Cohere API", "NLP"],
-      features: [
-        "Advanced NLP for accurate content extraction",
-        "Concise summaries of complex academic content",
-        "Interactive web interface for easy use"
-      ],
-      github: "https://github.com/sahniNitish",
-      live: "https://research-summarizer.streamlit.app",
-      gradient: "from-green-500 to-teal-600",
-      status: "Live",
-      statusType: "live"
-    },
-    {
-      title: "Task Flow",
-      subtitle: "Work-Flow Management App",
-      description: "Full-stack task management application with seamless user experience and efficient database management.",
-      icon: Workflow,
-      technologies: ["Laravel", "Vue.js", "Inertia.js", "MySQL", "Tailwind CSS"],
-      features: [
-        "Complete CRUD operations for task management",
-        "Server-side routing without page reloads",
-        "Interactive Vue.js frontend"
-      ],
-      github: "https://github.com/sahniNitish",
-      live: "https://taskflow-demo.com",
-      gradient: "from-orange-500 to-red-600",
-      status: "Completed",
-      statusType: "completed"
-    }
-  ];
 
   return (
-    <section 
-      id="projects" 
-      ref={projectsRef as any}
-      className="section-modern bg-muted/5 relative"
-    >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
-      </div>
+    <section id="work" ref={projectsRef as any} className="section">
+      <div className="section-content max-w-3xl">
+        <h2
+          className={`text-3xl md:text-4xl font-semibold mb-16 heading-font transition-all duration-700 ${
+            isVisible ? "animate-fade-up" : "opacity-0 translate-y-4"
+          }`}
+        >
+          Selected Work
+        </h2>
 
-      <div className="section-content">
-        <div className={`text-center mb-20 transition-all duration-1000 ${isVisible ? 'animate-slide-in-left' : 'opacity-0 -translate-x-10'}`}>
-          <div className="inline-block px-6 py-3 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium mb-8">
-            💼 My Work
-          </div>
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 display-font">
-            Featured <span className="text-gradient">Projects</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            A showcase of innovative applications spanning AI, blockchain, and full-stack development, 
-            each solving real-world problems with modern technologies.
-          </p>
-        </div>
-        
-        <div ref={containerRef as any} className="project-grid">
-          {projects.map((project, index) => (
-            <Card 
-              key={index} 
-              className={`modern-card group overflow-hidden cursor-hover transition-all duration-700 ${
-                visibleItems.has(index) 
-                  ? index % 2 === 0 
-                    ? 'animate-slide-in-left opacity-100 translate-x-0' 
-                    : 'animate-slide-in-right opacity-100 translate-x-0'
-                  : 'opacity-0 translate-x-8'
-              }`}
-            >
-              <div className="p-8 h-full flex flex-col">
-                {/* Header */}
-                <div className="flex items-start justify-between mb-8">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${project.gradient} rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    <project.icon className="h-8 w-8 text-white" />
-                  </div>
-                  <div className={`status-badge ${
-                    project.statusType === 'live' ? 'status-live' :
-                    project.statusType === 'development' ? 'status-development' :
-                    'status-completed'
-                  }`}>
-                    {project.status}
-                  </div>
-                </div>
-                
-                {/* Content */}
-                <div className="flex-1 space-y-6">
-                  <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300 heading-font">
-                      {project.title}
-                    </h3>
-                    <p className="text-lg font-medium text-primary mb-4">{project.subtitle}</p>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {project.description}
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-3">
-                    {project.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{feature}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 4).map((tech, i) => (
-                      <Badge 
-                        key={i} 
-                        variant="outline" 
-                        className="border-primary/20 text-primary/80 hover:bg-primary/10 text-xs px-3 py-1 hover:scale-105 transition-all duration-300 rounded-full"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                    {project.technologies.length > 4 && (
-                      <Badge variant="outline" className="border-muted-foreground/20 text-muted-foreground text-xs px-3 py-1 rounded-full">
-                        +{project.technologies.length - 4}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-                
-                {/* Actions */}
-                <div className="flex gap-3 mt-8">
-                  <Button
-                    variant="outline"
-                    className="flex-1 border-border hover:bg-muted hover:border-primary/50 rounded-full cursor-hover group transition-all duration-300"
-                    onClick={() => window.open(project.github, '_blank')}
+        <div className="divide-y divide-border">
+          {projects.map((project) => (
+            <div key={project.title} className="py-8 first:pt-0">
+              <div className="flex items-start justify-between gap-4 mb-2">
+                <h3 className="text-xl font-medium text-foreground heading-font">
+                  {project.title}
+                </h3>
+                {project.link ? (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors shrink-0"
                   >
-                    <Github className="h-4 w-4 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-                    Code
-                  </Button>
-                  <Button
-                    className="flex-1 btn-primary group relative overflow-hidden rounded-full"
-                    onClick={() => window.open(project.live || project.github, '_blank')}
-                  >
-                    <span className="relative z-10 flex items-center">
-                      <ExternalLink className="h-4 w-4 mr-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                      {project.live ? 'Live Demo' : 'View'}
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                  </Button>
-                </div>
+                    <ArrowUpRight className="h-5 w-5" />
+                  </a>
+                ) : (
+                  <span className="text-xs text-muted-foreground shrink-0 mt-1">
+                    {project.label}
+                  </span>
+                )}
               </div>
-            </Card>
-          ))}
-        </div>
 
-        {/* Call to Action */}
-        <div className="text-center mt-20 animate-slide-up">
-          <p className="text-muted-foreground mb-8 text-lg">
-            Interested in seeing more of my work?
-          </p>
-          <Button
-            variant="outline"
-            className="btn-secondary cursor-hover group"
-            onClick={() => window.open('https://github.com/sahniNitish', '_blank')}
-          >
-            <Github className="h-5 w-5 mr-3 group-hover:rotate-12 transition-transform duration-300" />
-            View All Projects on GitHub
-            <ArrowUpRight className="h-5 w-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-          </Button>
+              <p className="text-muted-foreground leading-relaxed mb-4 max-w-2xl">
+                {project.description}
+              </p>
+
+              <p className="mono-tag text-xs text-muted-foreground">
+                {project.tags.join(" · ")}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
