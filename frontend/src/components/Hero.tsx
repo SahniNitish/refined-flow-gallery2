@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import ContributionGrid from "@/components/ContributionGrid";
 
 const NAME = "Nitish Sahni";
 
@@ -38,11 +37,9 @@ const Hero = () => {
     <section
       id="hero"
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden"
+      className="min-h-screen flex items-center justify-center pt-16"
     >
-      <ContributionGrid />
-
-      <div className="section-content max-w-3xl relative">
+      <div className="section-content max-w-3xl">
         <div className="hero-fade flex items-center gap-2 mb-4">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
