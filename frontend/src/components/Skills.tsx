@@ -1,3 +1,5 @@
+import { useSectionReveal } from "@/hooks/useSectionReveal";
+
 const skillGroups = [
   {
     title: "Languages",
@@ -18,10 +20,15 @@ const skillGroups = [
 ];
 
 const Skills = () => {
+  const ref = useSectionReveal<HTMLDivElement>();
+
   return (
     <section id="skills" className="section">
-      <div className="section-content max-w-3xl">
-        <h2 className="text-3xl md:text-4xl font-semibold mb-16 heading-font">Skills</h2>
+      <div ref={ref} className="section-content max-w-3xl">
+        <div className="flex items-baseline gap-3 mb-16">
+          <span className="section-index">03</span>
+          <h2 className="text-3xl md:text-4xl font-semibold heading-font">Skills</h2>
+        </div>
 
         <div className="grid sm:grid-cols-2 gap-x-12 gap-y-10">
           {skillGroups.map((group) => (
@@ -33,7 +40,7 @@ const Skills = () => {
                 {group.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="mono-tag text-xs px-3 py-1 border border-border rounded-full text-foreground"
+                    className="mono-tag text-xs px-3 py-1 border border-border rounded-full text-foreground transition-colors duration-300 ease-expo hover:border-primary hover:text-primary"
                   >
                     {skill}
                   </span>

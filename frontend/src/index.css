@@ -6,7 +6,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Minimal dark, typography-first design system */
+/* Cinematic dark, typography-first design system */
 
 @layer base {
   :root {
@@ -19,8 +19,10 @@
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 93%;
 
-    --primary: 217 60% 65%;
-    --primary-foreground: 0 0% 4%;
+    /* Linear indigo #5E6AD2, lightened for on-dark text/link contrast (~6.2:1 vs #0a0a0f).
+       Decorative uses (blobs, dots, spotlight, glow) use the literal hex directly. */
+    --primary: 234 56% 68%;
+    --primary-foreground: 0 0% 8%;
 
     --secondary: 0 0% 10%;
     --secondary-foreground: 0 0% 93%;
@@ -28,17 +30,27 @@
     --muted: 0 0% 10%;
     --muted-foreground: 0 0% 60%;
 
-    --accent: 217 60% 65%;
-    --accent-foreground: 0 0% 4%;
+    --accent: 234 56% 68%;
+    --accent-foreground: 0 0% 8%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 12%;
     --input: 0 0% 12%;
-    --ring: 217 60% 65%;
+    --ring: 234 56% 68%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Cinematic layer tokens */
+    --bg-grad-top: #0a0a0f;
+    --bg-grad-bottom: #020203;
+    --accent-glow: rgba(94, 106, 210, 0.2);
+    --spotlight-color: rgba(94, 106, 210, 0.15);
+    --surface: rgba(255, 255, 255, 0.03);
+    --surface-hover: rgba(255, 255, 255, 0.05);
+    --hairline: rgba(255, 255, 255, 0.08);
+    --hairline-hover: rgba(255, 255, 255, 0.14);
   }
 }
 
@@ -53,6 +65,18 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 }
 
@@ -74,8 +98,61 @@
     @apply container mx-auto px-6;
   }
 
+  .section-index {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: hsl(var(--primary));
+  }
+
   .animate-fade-up {
     animation: fadeUp 0.6s ease-out;
+  }
+
+  /* Cinematic surface: translucent card with hairline border + top sheen */
+  .surface {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .surface-hover {
+    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .surface-hover:hover {
+    background: var(--surface-hover);
+    border-color: var(--hairline-hover);
+  }
+
+  /* Cursor-tracking spotlight, position set via --x/--y CSS vars in JS */
+  .spotlight-card {
+    overflow: hidden;
+  }
+
+  .spotlight-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(500px circle at var(--x, 50%) var(--y, 50%), var(--spotlight-color), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .spotlight-card:hover::before {
+    opacity: 1;
+  }
+
+  .glow-hover {
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+  }
+
+  .glow-hover:hover {
+    text-shadow: 0 0 30px var(--accent-glow);
   }
 }
 
@@ -88,6 +165,33 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes blobFloatA {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -24px) scale(1.08); }
+  }
+
+  @keyframes blobFloatB {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-24px, 20px) scale(1.06); }
+  }
+
+  @keyframes blobFloatC {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(18px, -16px) scale(1.05); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-blob-a { animation: blobFloatA 22s ease-in-out infinite; }
+    .animate-blob-b { animation: blobFloatB 26s ease-in-out infinite; }
+    .animate-blob-c { animation: blobFloatC 30s ease-in-out infinite; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-ping {
+      animation: none !important;
     }
   }
 }

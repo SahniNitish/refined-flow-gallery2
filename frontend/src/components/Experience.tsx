@@ -1,3 +1,6 @@
+import { useRef } from "react";
+import { gsap, useGSAP } from "@/lib/gsap";
+
 const experiences = [
   {
     title: "Technical Systems Analyst",
@@ -35,32 +38,63 @@ const experiences = [
 ];
 
 const Experience = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(".timeline-item", {
+          opacity: 0,
+          y: 24,
+          stagger: 0.12,
+          ease: "power2.out",
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 85%",
+          },
+        });
+      });
+    },
+    { scope: sectionRef }
+  );
+
   return (
-    <section id="experience" className="section">
+    <section id="experience" ref={sectionRef} className="section">
       <div className="section-content max-w-3xl">
-        <h2 className="text-3xl md:text-4xl font-semibold mb-16 heading-font">Experience</h2>
+        <div className="flex items-baseline gap-3 mb-16">
+          <span className="section-index">02</span>
+          <h2 className="text-3xl md:text-4xl font-semibold heading-font">Experience</h2>
+        </div>
 
-        <div className="space-y-12">
-          {experiences.map((exp) => (
-            <div key={exp.title + exp.company} className="border-l border-border pl-6">
-              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-3">
-                <h3 className="text-lg font-medium text-foreground heading-font">
-                  {exp.title} <span className="text-muted-foreground font-normal">· {exp.company}</span>
-                </h3>
-                <span className="text-sm text-muted-foreground">{exp.period}</span>
+        <div className="relative">
+          <div className="absolute left-0 top-2 bottom-2 w-px bg-border" aria-hidden />
+
+          <div className="space-y-12">
+            {experiences.map((exp) => (
+              <div key={exp.title + exp.company} className="timeline-item relative pl-8">
+                <span className="absolute left-0 top-1.5 -translate-x-1/2 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-background" />
+
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-3">
+                  <h3 className="text-lg font-medium text-foreground heading-font">
+                    {exp.title} <span className="text-muted-foreground font-normal">· {exp.company}</span>
+                  </h3>
+                  <span className="text-sm text-muted-foreground">{exp.period}</span>
+                </div>
+
+                <ul className="space-y-2 mb-4">
+                  {exp.achievements.map((item) => (
+                    <li key={item} className="text-muted-foreground leading-relaxed text-sm">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="mono-tag text-xs text-muted-foreground">{exp.tags.join(" · ")}</p>
               </div>
-
-              <ul className="space-y-2 mb-4">
-                {exp.achievements.map((item) => (
-                  <li key={item} className="text-muted-foreground leading-relaxed text-sm">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-
-              <p className="mono-tag text-xs text-muted-foreground">{exp.tags.join(" · ")}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

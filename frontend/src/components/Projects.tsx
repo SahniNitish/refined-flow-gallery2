@@ -1,5 +1,6 @@
+import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { gsap, useGSAP } from "@/lib/gsap";
 
 const projects = [
   {
@@ -35,49 +36,95 @@ const projects = [
 ];
 
 const Projects = () => {
-  const { ref: projectsRef, isVisible } = useScrollAnimation();
+  const sectionRef = useRef<HTMLElement>(null);
+  const rafRef = useRef<number>();
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(".project-card", {
+          opacity: 0,
+          y: 24,
+          stagger: 0.08,
+          ease: "power2.out",
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 85%",
+          },
+        });
+      });
+    },
+    { scope: sectionRef }
+  );
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const { clientX, clientY } = e;
+    if (rafRef.current) return;
+    rafRef.current = requestAnimationFrame(() => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty("--x", `${clientX - rect.left}px`);
+      card.style.setProperty("--y", `${clientY - rect.top}px`);
+      rafRef.current = undefined;
+    });
+  };
 
   return (
-    <section id="work" ref={projectsRef as any} className="section">
+    <section id="work" ref={sectionRef} className="section">
       <div className="section-content max-w-3xl">
-        <h2
-          className={`text-3xl md:text-4xl font-semibold mb-16 heading-font transition-all duration-700 ${
-            isVisible ? "animate-fade-up" : "opacity-0 translate-y-4"
-          }`}
-        >
-          Selected Work
-        </h2>
+        <div className="flex items-baseline gap-3 mb-16">
+          <span className="section-index">01</span>
+          <h2 className="text-3xl md:text-4xl font-semibold heading-font">Selected Work</h2>
+        </div>
 
-        <div className="divide-y divide-border">
-          {projects.map((project) => (
-            <div key={project.title} className="py-8 first:pt-0">
+        <div className="space-y-4">
+          {projects.map((project, i) => (
+            <div
+              key={project.title}
+              onMouseMove={handleMouseMove}
+              className="project-card spotlight-card surface surface-hover group relative p-6 md:p-8"
+            >
               <div className="flex items-start justify-between gap-4 mb-2">
-                <h3 className="text-xl font-medium text-foreground heading-font">
-                  {project.title}
-                </h3>
+                <div className="flex items-baseline gap-3">
+                  <span className="mono-tag text-xs text-muted-foreground">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="text-xl font-medium text-foreground heading-font">
+                    {project.title}
+                  </h3>
+                </div>
                 {project.link ? (
                   <a
                     href={project.link}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors shrink-0"
+                    className="relative text-muted-foreground group-hover:text-primary transition-all duration-300 ease-expo group-hover:-translate-y-0.5 group-hover:translate-x-0.5 shrink-0"
                   >
                     <ArrowUpRight className="h-5 w-5" />
                   </a>
                 ) : (
-                  <span className="text-xs text-muted-foreground shrink-0 mt-1">
+                  <span className="relative text-xs text-muted-foreground shrink-0 mt-1">
                     {project.label}
                   </span>
                 )}
               </div>
 
-              <p className="text-muted-foreground leading-relaxed mb-4 max-w-2xl">
+              <p className="relative text-muted-foreground leading-relaxed mb-4 max-w-2xl">
                 {project.description}
               </p>
 
-              <p className="mono-tag text-xs text-muted-foreground">
-                {project.tags.join(" · ")}
-              </p>
+              <div className="relative flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="mono-tag text-xs px-2.5 py-1 border border-border rounded-full text-muted-foreground"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           ))}
         </div>

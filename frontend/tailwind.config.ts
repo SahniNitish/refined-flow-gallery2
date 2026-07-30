@@ -22,7 +22,7 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -67,6 +67,12 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        glow: "0 0 40px rgba(94, 106, 210, 0.25)",
+      },
+      transitionTimingFunction: {
+        expo: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
         "accordion-down": {

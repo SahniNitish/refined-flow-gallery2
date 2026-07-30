@@ -1,16 +1,15 @@
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useSectionReveal } from "@/hooks/useSectionReveal";
 
 const About = () => {
-  const { ref: aboutRef, isVisible } = useScrollAnimation();
+  const ref = useSectionReveal<HTMLDivElement>();
 
   return (
-    <section id="about" ref={aboutRef as any} className="section">
-      <div
-        className={`section-content max-w-3xl transition-all duration-700 ${
-          isVisible ? "animate-fade-up" : "opacity-0 translate-y-4"
-        }`}
-      >
-        <h2 className="text-3xl md:text-4xl font-semibold mb-10 heading-font">About</h2>
+    <section id="about" className="section">
+      <div ref={ref} className="section-content max-w-3xl">
+        <div className="flex items-baseline gap-3 mb-10">
+          <span className="section-index">04</span>
+          <h2 className="text-3xl md:text-4xl font-semibold heading-font">About</h2>
+        </div>
 
         <div className="space-y-6 text-muted-foreground leading-relaxed text-lg max-w-2xl">
           <p>
