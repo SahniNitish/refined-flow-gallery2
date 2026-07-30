@@ -1,5 +1,4 @@
 import { useSectionReveal } from "@/hooks/useSectionReveal";
-import GitHubActivity from "@/components/GitHubActivity";
 
 const About = () => {
   const ref = useSectionReveal<HTMLDivElement>();
@@ -12,7 +11,7 @@ const About = () => {
           <h2 className="text-3xl md:text-4xl font-semibold heading-font">About</h2>
         </div>
 
-        <div className="space-y-6 text-muted-foreground leading-relaxed text-lg max-w-2xl mb-10">
+        <div className="space-y-6 text-muted-foreground leading-relaxed text-lg max-w-2xl">
           <p>
             I studied Computer Science at Acadia University and now work as a Technical
             Systems Analyst at Irving Personal Care, where I build the software that keeps
@@ -23,8 +22,6 @@ const About = () => {
             turning raw sensor and process data into something people can actually act on.
           </p>
         </div>
-
-        <GitHubActivity />
       </div>
     </section>
   );

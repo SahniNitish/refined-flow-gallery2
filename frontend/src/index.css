@@ -189,6 +189,18 @@
     .animate-blob-c { animation: blobFloatC 30s ease-in-out infinite; }
   }
 
+  @keyframes contributionPulse {
+    0%, 100% { opacity: calc(var(--cell-opacity, 0.2) * 0.6); }
+    50% { opacity: calc(var(--cell-opacity, 0.2) * 1.15); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .is-live {
+      animation: contributionPulse var(--cell-duration, 6s) ease-in-out infinite;
+      animation-delay: var(--cell-delay, 0s);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .animate-ping {
       animation: none !important;
