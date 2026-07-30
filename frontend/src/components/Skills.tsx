@@ -17,6 +17,17 @@ const skillGroups = [
     title: "Analytics & Low-code",
     skills: ["Power BI", "Power Apps", "SharePoint"],
   },
+  {
+    title: "AI & LLM Engineering",
+    skills: [
+      "RAG Pipelines",
+      "AI Agents",
+      "LLM APIs (Claude, OpenAI)",
+      "Vector Databases",
+      "Prompt Engineering",
+      "Model Integration",
+    ],
+  },
 ];
 
 const Skills = () => {
@@ -32,7 +43,10 @@ const Skills = () => {
 
         <div className="grid sm:grid-cols-2 gap-x-12 gap-y-10">
           {skillGroups.map((group) => (
-            <div key={group.title}>
+            <div
+              key={group.title}
+              className={group.title === "AI & LLM Engineering" ? "sm:col-span-2" : undefined}
+            >
               <h3 className="text-sm uppercase tracking-wide text-muted-foreground mb-4 heading-font">
                 {group.title}
               </h3>
