@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { useSectionReveal } from "@/hooks/useSectionReveal";
 import { posts } from "@/lib/posts";
 
 const Blog = () => {
-  const ref = useSectionReveal<HTMLDivElement>();
   usePageMeta(
     "Blog — Nitish Sahni",
     "Notes on systems, AI tooling, and building things that last."
@@ -12,7 +10,7 @@ const Blog = () => {
 
   return (
     <section className="pt-28 pb-24 md:pt-32 md:pb-32">
-      <div ref={ref} className="section-content max-w-3xl">
+      <div className="section-content max-w-3xl">
         <div className="flex items-baseline gap-3 mb-6">
           <span className="section-index">Blog</span>
         </div>
