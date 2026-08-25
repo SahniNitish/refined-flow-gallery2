@@ -10,8 +10,20 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/assets/(.*)",
+      "dest": "frontend/assets/$1"
+    },
+    {
+      "src": "/blog/(.*\\.(png|jpg|jpeg|webp|svg|gif))",
+      "dest": "frontend/blog/$1"
+    },
+    {
+      "src": "/(favicon\\.svg|robots\\.txt|placeholder\\.svg)",
       "dest": "frontend/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend/index.html"
     }
   ]
 }

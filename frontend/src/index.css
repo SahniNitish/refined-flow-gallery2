@@ -154,6 +154,55 @@
   .glow-hover:hover {
     text-shadow: 0 0 30px var(--accent-glow);
   }
+
+  .blog-prose p {
+    @apply text-lg text-muted-foreground leading-[1.75] mb-6;
+  }
+
+  .blog-prose p:last-child {
+    @apply mb-0;
+  }
+
+  .blog-prose h2 {
+    font-family: "Space Grotesk", sans-serif;
+    @apply text-2xl md:text-3xl font-semibold text-foreground mt-16 mb-5 tracking-tight;
+  }
+
+  .blog-prose h3 {
+    font-family: "Space Grotesk", sans-serif;
+    @apply text-xl font-medium text-foreground mt-12 mb-4 flex items-baseline;
+  }
+
+  .blog-prose ul {
+    @apply space-y-2 mb-6 pl-5;
+  }
+
+  .blog-prose li {
+    @apply text-lg text-muted-foreground leading-[1.75] list-disc;
+  }
+
+  .blog-prose li strong {
+    @apply text-foreground font-medium;
+  }
+
+  .blog-prose p strong,
+  .blog-prose strong {
+    @apply text-foreground font-medium;
+  }
+
+  .blog-prose em {
+    @apply italic;
+  }
+
+  .blog-prose a {
+    @apply text-primary underline-offset-4 hover:underline;
+  }
+
+  .blog-prose p code,
+  .blog-prose li code {
+    font-family: "JetBrains Mono", monospace;
+    @apply text-[0.85em] text-primary bg-white/[0.05] px-1.5 py-0.5 rounded;
+  }
 }
 
 @layer utilities {

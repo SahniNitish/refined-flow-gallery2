@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { gsap, useGSAP } from "@/lib/gsap";
 
 const NAME = "Nitish Sahni";
@@ -94,6 +95,10 @@ const Hero = () => {
           >
             Email
           </a>
+          <span>·</span>
+          <Link to="/blog" className="hover:text-primary transition-colors">
+            Blog
+          </Link>
           <span>·</span>
           <span>Nova Scotia, Canada</span>
         </div>
