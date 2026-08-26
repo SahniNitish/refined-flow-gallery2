@@ -96,6 +96,10 @@ const Hero = () => {
             Email
           </a>
           <span>·</span>
+          <Link to="/dsa" className="hover:text-primary transition-colors">
+            DSA
+          </Link>
+          <span>·</span>
           <Link to="/blog" className="hover:text-primary transition-colors">
             Blog
           </Link>

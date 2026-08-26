@@ -25,6 +25,12 @@ const NotFound = () => {
           <span className="text-muted-foreground" aria-hidden>
             ·
           </span>
+          <Link to="/dsa" className="text-primary hover:underline underline-offset-4">
+            DSA
+          </Link>
+          <span className="text-muted-foreground" aria-hidden>
+            ·
+          </span>
           <Link to="/blog" className="text-primary hover:underline underline-offset-4">
             Blog
           </Link>

@@ -35,6 +35,13 @@ const Footer = () => {
           </a>
           <span>·</span>
           <Link
+            to="/dsa"
+            className="hover:text-primary transition-colors duration-300 ease-expo"
+          >
+            DSA
+          </Link>
+          <span>·</span>
+          <Link
             to="/blog"
             className="hover:text-primary transition-colors duration-300 ease-expo"
           >

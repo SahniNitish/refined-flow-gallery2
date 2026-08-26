@@ -15,6 +15,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const isHome = location.pathname === "/";
   const isBlog = location.pathname.startsWith("/blog");
+  const isDsa = location.pathname.startsWith("/dsa");
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -101,6 +102,14 @@ const Navigation = () => {
               </button>
             ))}
             <Link
+              to="/dsa"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={sectionClass(isDsa)}
+              aria-current={isDsa ? "page" : undefined}
+            >
+              DSA
+            </Link>
+            <Link
               to="/blog"
               onClick={() => setIsMobileMenuOpen(false)}
               className={sectionClass(isBlog)}
@@ -142,6 +151,16 @@ const Navigation = () => {
                   {item.label}
                 </button>
               ))}
+              <Link
+                to="/dsa"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block w-full text-left min-h-11 flex items-center ${sectionClass(
+                  isDsa
+                )}`}
+                aria-current={isDsa ? "page" : undefined}
+              >
+                DSA
+              </Link>
               <Link
                 to="/blog"
                 onClick={() => setIsMobileMenuOpen(false)}

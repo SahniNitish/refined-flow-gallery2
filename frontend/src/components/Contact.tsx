@@ -7,7 +7,7 @@ const Contact = () => {
     <section id="contact" className="section">
       <div ref={ref} className="section-content max-w-3xl">
         <div className="flex items-baseline gap-3 mb-10">
-          <span className="section-index">06</span>
+          <span className="section-index">07</span>
           <h2 className="text-3xl md:text-4xl font-semibold heading-font">Contact</h2>
         </div>
 

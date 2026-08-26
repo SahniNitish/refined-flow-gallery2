@@ -6,6 +6,7 @@ import Experience from "@/components/Experience";
 import Skills from "@/components/Skills";
 import About from "@/components/About";
 import Writing from "@/components/Writing";
+import DsaTeaser from "@/components/DsaTeaser";
 import Contact from "@/components/Contact";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
@@ -30,6 +31,7 @@ const Index = () => {
       <Skills />
       <About />
       <Writing />
+      <DsaTeaser />
       <Contact />
     </>
   );
